@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_property` ADD COLUMN `sortKey` int(11) DEFAULT NULL COMMENT '排序字段';

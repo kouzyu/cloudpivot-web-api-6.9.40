@@ -1,0 +1,1 @@
+alter table h_biz_perm_group add appPermGroupId varchar(120) null comment '关联的应用管理权限组ID';

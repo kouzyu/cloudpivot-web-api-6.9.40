@@ -1,0 +1,1 @@
+UPDATE h_biz_schema SET businessRuleEnable=1;

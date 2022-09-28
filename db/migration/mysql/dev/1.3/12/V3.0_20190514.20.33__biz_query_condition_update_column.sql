@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_query_condition` MODIFY `defaultValue` VARCHAR(500) DEFAULT NULL COMMENT '默认值';

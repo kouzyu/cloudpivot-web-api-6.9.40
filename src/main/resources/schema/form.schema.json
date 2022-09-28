@@ -1,0 +1,199 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"title": "表单设计",
+	"description": "云枢-表单设计-元数据-格式规范",
+	"required": [
+		"id",
+		"type",
+		"bizSheets"
+	],
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "唯一标识"
+		},
+		"type": {
+			"type": "string",
+			"description": "元数据类型"
+		},
+		"bizSheets": {
+			"type": "array",
+			"description": "业务表单",
+			"items": {
+				"anyOf": [{
+					"type": "object",
+					"required": [
+						"id",
+						"code",
+						"name",
+						"schemaCode"
+					],
+					"properties": {
+						"id": {
+							"type": ["string","null"],
+							"description": "唯一标识"
+						},
+						"code": {
+							"type": "string",
+							"description": "表单编码"
+						},
+						"name": {
+							"type": "string",
+							"description": "表单名称"
+						},
+						"name_i18n": {
+							"type": ["string","null"],
+							"description": "国际化"
+						},
+						"formType": {
+							"type": "string",
+							"description": "表单类型"
+						},
+						"formTypeName": {
+							"type": ["string","null"],
+							"description": "表单类型名称"
+						},
+						"sheetType": {
+							"type": ["string","null"],
+							"description": "表单类型，自定义表单与系统表单"
+						},
+						"sheetTypeName": {
+							"type": ["string","null"],
+							"description": "表单类型，显示名称"
+						},
+						"shortCode": {
+							"type": ["string","null"],
+							"description": "表单短码"
+						},
+						"icon": {
+							"type": ["string","null"],
+							"description": "图标"
+						},
+						"schemaCode": {
+							"type": "string",
+							"description": "数据模型编码"
+						},
+						"borderMode": {
+							"type": ["string","null"],
+							"description": "边框模式"
+						},
+						"layoutType": {
+							"type": ["string","null"],
+							"description": "布局方式"
+						},
+						"printTemplateJson": {
+							"type": ["string","null"],
+							"description": "关联的打印模板json字符串"
+						},
+						"draftActionsJson": {
+							"type": ["string","null"],
+							"description": "草稿在线设计与编辑按钮json"
+						},
+						"draftAttributesJson": {
+							"type": ["string","null"],
+							"description": "草稿控件属性json"
+						},
+						"draftHtmlJson": {
+							"type": ["string","null"],
+							"description": "草稿在线设计与编辑json"
+						},
+						"draftViewJson": {
+							"type": ["string","null"],
+							"description": "草稿表单视图Json"
+						},
+						"publishedActionsJson": {
+							"type": ["string","null"],
+							"description": "发布在线设计与编辑按钮json"
+						},
+						"publishedAttributesJson": {
+							"type": ["string","null"],
+							"description": "发布控件属性json"
+						},
+						"publishedHtmlJson": {
+							"type": ["string","null"],
+							"description": "发布在线设计及编辑Json"
+						},
+						"publishedViewJson": {
+							"type": ["string","null"],
+							"description": "发布表单视图Json"
+						},
+						"tempAuthSchemaCodes": {
+							"type": ["string","null"],
+							"description": "临时授权表单，约定为\"schemacode_sheetcode\"以，分割"
+						},
+						"externalLinkAble": {
+							"type": ["boolean","null"],
+							"description": "公开外链"
+						},
+						"formComment": {
+							"type": ["boolean","null"],
+							"description": "表单评论"
+						},
+						"qrCodeAble": {
+							"type": ["string","null"],
+							"description": "是否开启表单二维码"
+						},
+						"pdfAble": {
+							"type": ["string","null"],
+							"description": "是否开启PDF打印"
+						},
+						"printIsPc": {
+							"type": ["boolean","null"],
+							"description": "是否打印访问的url同PC一样"
+						},
+						"mobileIsPc": {
+							"type": ["boolean","null"],
+							"description": "是否移动访问的url同PC一样"
+						},
+						"mobileUrl": {
+							"type": ["string","null"],
+							"description": "移动访问的url"
+						},
+						"printUrl": {
+							"type": ["string","null"],
+							"description": "打印访问的url"
+						},
+						"pcUrl": {
+							"type": ["string","null"],
+							"description": "pc访问的url"
+						},
+						"sortKey": {
+							"type": ["integer","null"],
+							"description": "排序"
+						},
+						"published": {
+							"type": ["boolean","null"],
+							"description": "已发布"
+						},
+						"deleted": {
+							"type": ["boolean","null"],
+							"title": "已删除",
+							"description": ""
+						},
+						"remarks": {
+							"type": ["string","null"],
+							"description": "备注"
+						},
+						"createdBy": {
+							"type": ["string","null"],
+							"description": "创建人员"
+						},
+						"createdTime": {
+							"type": ["string","null"],
+							"description": "创建时间"
+						},
+						"modifiedBy": {
+							"type": ["string","null"],
+							"description": "更新人员"
+						},
+						"modifiedTime": {
+							"type": ["string","null"],
+							"description": "更新时间"
+						}
+					}
+				}]
+			}
+		}
+	}
+}

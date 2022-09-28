@@ -1,0 +1,1 @@
+alter table h_biz_property modify name varchar2(600)

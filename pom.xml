@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.authine.cloudpivot</groupId>
+    <artifactId>web-api</artifactId>
+    <version>${cloudpivot.version}</version> <!-- 注: 可自定义版本 -->
+    <name>web-api</name>
+    <description>云枢应用脚手架工程 (Web API Spring Boot启动工程)</description>
+    <packaging>${project.packaging}</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.18.RELEASE</version>
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+
+        <!-- CloudPivot云枢平台 版本号 -->
+        <!-- 升级云枢, 请修改此属性值即可 -->
+        <cloudpivot.version>6.9.40</cloudpivot.version>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+        <project.packaging>jar</project.packaging>
+
+        <plugins-sap.version>6.9.40-SNAPSHOT</plugins-sap.version>
+        <knife4j-spring-ui.version>3.0.3</knife4j-spring-ui.version>
+    </properties>
+
+    <dependencies>
+        <!-- 云枢6 平台依赖 -->
+        <!-- 此依赖同时引入云枢engine的相关依赖包 -->
+        <dependency>
+            <groupId>com.authine.cloudpivot</groupId>
+            <artifactId>web-api-service</artifactId>
+            <version>${cloudpivot.version}</version>
+        </dependency>
+        <!-- end 云枢6 平台依赖 -->
+        <!--<dependency>-->
+        <!--<groupId>com.aliyun</groupId>-->
+        <!--<artifactId>polardb-jdbc18</artifactId>-->
+        <!--<version>1.1.2</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- 扩展依赖包 -->
+        <!-- SAP RFC 协议适配器 -->
+        <dependency>
+            <groupId>com.authine.cloudpivot.engine</groupId>
+            <artifactId>cloudpivot-engine-bizbus-plugins-sap</artifactId>
+            <version>${plugins-sap.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.authine.cloudpivot.foundation</groupId>
+                    <artifactId>cloudpivot-foundation-boot</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.authine.cloudpivot.engine</groupId>
+                    <artifactId>cloudpivot-engine-bizbus-infrastructure</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.authine.cloudpivot.engine</groupId>
+                    <artifactId>cloudpivot-engine-bizbus-spi</artifactId>
+                </exclusion>
+<!--应该放开但idea方式启动会报错(jar包管理问题)-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.sap.conn</groupId>-->
+<!--                    <artifactId>jco</artifactId>-->
+<!--                </exclusion>-->
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-ui</artifactId>
+            <version>${knife4j-spring-ui.version}</version>
+        </dependency>
+        <!-- end 扩展依赖包 -->
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>war</id>
+            <properties>
+                <project.packaging>war</project.packaging>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <exclusions>
+                        <exclusion>
+                            <artifactId>spring-boot-starter-tomcat</artifactId>
+                            <groupId>org.springframework.boot</groupId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <finalName>api</finalName>
+            </build>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <activatedProperties>prod</activatedProperties>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <resources>
+            <!-- 处理自行管理的jar包 -->
+            <resource>
+                <directory>${basedir}/lib</directory>
+                <targetPath>BOOT-INF/lib/</targetPath>
+                <includes>
+                    <include>**/*.jar</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>${basedir}\src\main\resources</directory>
+                <includes>
+                    <include>**/application*.yml</include>
+                    <include>**/application*.yaml</include>
+                    <include>**/application*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${basedir}\src\main\resources</directory>
+                <excludes>
+                    <exclude>**/application*.yml</exclude>
+                    <exclude>**/application*.yaml</exclude>
+                    <exclude>**/application*.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
+
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+<!--                    <includeSystemScope>true</includeSystemScope>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <repositories>
+        <!-- Authine CloudPivot Repository 声明 -->
+        <repository>
+            <id>nexus</id>
+            <name>Authine nexus</name>
+            <url>http://nexus.h3yun.com:8888/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <!-- 其他repository 声明 -->
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus</id>
+            <name>Authine nexus</name>
+            <url>http://nexus.h3yun.com:8888/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>

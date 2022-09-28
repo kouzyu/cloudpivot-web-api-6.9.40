@@ -1,0 +1,1 @@
+ALTER TABLE h_biz_sheet ADD COLUMN printJson longtext comment '打印模板json';

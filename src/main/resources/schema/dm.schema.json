@@ -1,0 +1,414 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"title": "数据模型",
+	"description": "云枢-数据模型-元数据-格式规范",
+	"required": [
+		"id",
+		"type",
+		"bizSchema",
+		"businessRule"
+	],
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "唯一标识"
+		},
+		"type": {
+			"type": "string",
+			"description": "元数据类型"
+		},
+		"bizSchema": {
+			"type": "array",
+			"description": "数据模型",
+			"items": {
+				"anyOf": [{
+					"type": "object",
+					"required": [
+						"id",
+						"code",
+						"name"
+					],
+					"properties": {
+						"id": {
+							"type": ["string","null"],
+							"description": "唯一标识"
+						},
+						"code": {
+							"type": "string",
+							"description": "模型编码"
+						},
+						"name": {
+							"type": "string",
+							"description": "模型名称"
+						},
+						"name_i18n": {
+							"type": ["string","null"],
+							"description": "国际化"
+						},
+						"icon": {
+							"type": ["string","null"],
+							"description": "图标"
+						},
+						"summary": {
+							"type": ["string","null"],
+							"description": "概要信息"
+						},
+						"published": {
+							"type": ["boolean","null"],
+							"description": "已发布"
+						},
+						"businessRuleEnable": {
+							"type": ["boolean","null"],
+							"description": "是否启用业务规则"
+						},
+						"deleted": {
+							"type": ["boolean","null"],
+							"description": "已删除"
+						},
+						"remarks": {
+							"type": ["string","null"],
+							"description": "备注"
+						},
+						"createdTime": {
+							"type": ["string","null"],
+							"description": "创建时间"
+						},
+						"createdBy": {
+							"type": ["string","null"],
+							"description": "创建人员"
+						},
+						"modifiedTime": {
+							"type": ["string","null"],
+							"description": "更新时间"
+						},
+						"modifiedBy": {
+							"type": ["string","null"],
+							"description": "更新人员"
+						},
+						"properties": {
+							"type": "array",
+							"description": "模型数据项列表",
+							"items": {
+								"anyOf": [{
+									"type": "object",
+									"required": [
+										"id",
+										"code",
+										"name",
+										"propertyType",
+										"propertyTypeName",
+										"schemaCode"
+									],
+									"properties": {
+										"id": {
+											"type": ["string","null"],
+											"description": "唯一标识"
+										},
+										"code": {
+											"type": "string",
+											"description": "数据项编码"
+										},
+										"name": {
+											"type": "string",
+											"description": "数据项名称"
+										},
+										"name_i18n": {
+											"type": ["string","null"],
+											"description": "国际化"
+										},
+										"schemaCode": {
+											"type": "string",
+											"description": "数据模型编码"
+										},
+										"propertyType": {
+											"type": "string",
+											"description": "数据类型"
+										},
+										"propertyTypeName": {
+											"type": "string",
+											"description": "数据类型名称"
+										},
+										"propertyLength": {
+											"type": ["integer","null"],
+											"description": "数据类型长度"
+										},
+										"defaultValue": {
+											"type": ["string","null"],
+											"description": "默认值"
+										},
+										"defaultProperty": {
+											"type": "boolean",
+											"description": "是否为默认属性"
+										},
+										"propertyIndex": {
+											"type": "boolean",
+											"description": "是否创建索引"
+										},
+										"propertyEmpty": {
+											"type": "boolean",
+											"description": "是否可空"
+										},
+										"published": {
+											"type": ["boolean","null"],
+											"description": "已发布"
+										},
+										"subSchema": {
+											"type": ["object","null"],
+											"description": "子表对象"
+										},
+										"relativeCode": {
+											"type": ["string","null"],
+											"description": "数据类型为“关联表单”，该字段保存模型表对应的模型Code"
+										},
+										"relativePropertyCode": {
+											"type": ["string","null"],
+											"description": "数据类型为“关联表单”，该字段保存关联表单展示字段编码"
+										},
+										"sortKey": {
+											"type": ["integer","null"],
+											"description": "排序"
+										},
+										"deleted": {
+											"type": "boolean",
+											"description": "已删除"
+										},
+										"remarks": {
+											"type": ["string","null"],
+											"description": "备注"
+										},
+										"createdTime": {
+											"type": ["string","null"],
+											"description": "创建时间"
+										},
+										"createdBy": {
+											"type": ["string","null"],
+											"description": "创建人员"
+										},
+										"modifiedTime": {
+											"type": ["string","null"],
+											"description": "更新时间"
+										},
+										"modifiedBy": {
+											"type": ["string","null"],
+											"description": "更新人员"
+										}
+									}
+								}]
+							}
+						}
+					}
+				}]
+			}
+		},
+		"businessRule": {
+			"type": "array",
+			"description": "业务规则",
+			"items": {
+				"anyOf": [{
+					"type": "object",
+					"description": "唯一标识",
+					"required": [
+						"id",
+						"code",
+						"name"
+					],
+					"properties": {
+						"id": {
+							"type": ["string","null"],
+							"description": "唯一标识"
+						},
+						"code": {
+							"type": "string",
+							"description": "业务规则编码"
+						},
+						"name": {
+							"type": "string",
+							"description": "业务规则名称"
+						},
+						"schemaCode": {
+							"type": "string",
+							"description": "数据模型编码"
+						},
+						"bizRuleType": {
+							"type": "string",
+							"description": "业务规则类型:数据操作业务规则,获取数据集合业务规则,定时作业业务规则"
+						},
+						"defaultRule": {
+							"type": "boolean",
+							"description": "系统默认业务规则"
+						},
+						"route": {
+							"type": "string",
+							"description": "业务规则路由"
+						},
+						"schedulerSetting": {
+							"type": ["string","null"],
+							"description": "定时任务设置，业务规则类型为定时作业业务规则有效"
+						},
+						"root": {
+							"type": ["object","null"],
+							"description": "根节点"
+						},
+						"deleted": {
+							"type": "boolean",
+							"description": "已删除"
+						},
+						"remarks": {
+							"type": ["string","null"],
+							"description": "备注"
+						},
+						"createdTime": {
+							"type": ["string","null"],
+							"description": "创建时间"
+						},
+						"createdBy": {
+							"type": ["string","null"],
+							"description": "创建人员"
+						},
+						"modifiedTime": {
+							"type": ["string","null"],
+							"description": "更新时间"
+						},
+						"modifiedBy": {
+							"type": ["string","null"],
+							"description": "更新人员"
+						}
+					}
+				}]
+			}
+		},
+		"relation": {
+			"type": "array",
+			"description": "数据模型关系",
+			"items": {
+				"anyOf": [{
+					"type": "object",
+					"required": [
+						"id",
+						"name",
+						"type",
+						"sourceId",
+						"targetId"
+					],
+					"properties": {
+						"id": {
+							"type": "string",
+							"description": "唯一标识"
+						},
+						"name": {
+							"type": "string",
+							"description": "关系名称"
+						},
+						"type": {
+							"type": "string",
+							"description": "关系类型：一对一，一对多，多对多"
+						},
+						"text": {
+							"type": "string",
+							"description": "关系文本"
+						},
+						"sourceId": {
+							"type": "string",
+							"description": "源节点ID"
+						},
+						"targetId": {
+							"type": "string",
+							"description": "目标节点ID"
+						}
+					}
+				}]
+			}
+		},
+		"view": {
+			"type": "object",
+			"description": "视图展现信息",
+			"required": [
+				"bizSchemaView",
+				"relationView"
+			],
+			"properties": {
+				"bizSchemaView": {
+					"type": "array",
+					"description": "数据模型视图信息",
+					"items": {
+						"anyOf": [{
+							"type": "object",
+							"required": [
+								"id",
+								"bizSchemaId",
+								"x",
+								"y",
+								"width",
+								"height"
+							],
+							"properties": {
+								"id": {
+									"type": "string",
+									"description": "唯一标识"
+								},
+								"bizSchemaId": {
+									"type": "string",
+									"description": "数据模型id"
+								},
+								"x": {
+									"type": "integer",
+									"description": "x"
+								},
+								"y": {
+									"type": "integer",
+									"description": "y"
+								},
+								"width": {
+									"type": "integer",
+									"description": "宽度"
+								},
+								"height": {
+									"type": "integer",
+									"description": "高度"
+								}
+							}
+						}]
+					}
+				},
+				"relationView": {
+					"type": "array",
+					"description": "关系视图信息",
+					"items": {
+						"anyOf": [{
+							"type": "object",
+							"required": [
+								"id",
+								"relationId"
+							],
+							"properties": {
+								"id": {
+									"type": "string",
+									"description": "唯一标识"
+								},
+								"relationId": {
+									"type": "string",
+									"description": "关系ID"
+								},
+								"dash": {
+									"type": "string",
+									"description": "关系类型，实线、虚线、虚点线"
+								},
+								"points": {
+									"type": "array",
+									"description": "连线拐点",
+									"items": {
+										"anyOf": [{
+											"type": "string",
+											"description": "连线拐点"
+										}]
+									}
+								}
+							}
+						}]
+					}
+				}
+			}
+		}
+	}
+}

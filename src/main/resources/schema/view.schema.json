@@ -1,0 +1,316 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "视图列表",
+  "description": "云枢-视图设计-元数据-格式规范",
+  "required": [
+    "id",
+    "type",
+    "bizQuery"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "唯一标识"
+    },
+    "type": {
+      "type": "string",
+      "description": "元数据类型"
+    },
+    "bizQuery": {
+      "type": "array",
+      "description": "视图设计",
+      "items": {
+        "anyOf": [{
+          "type": "object",
+          "required": [
+            "id",
+            "code",
+            "name",
+            "schemaCode"
+          ],
+          "properties": {
+            "clientType": {
+              "type": "string",
+              "description": "客户端类型"
+            },
+            "code": {
+              "type": "string",
+              "description": "列表编码"
+            },
+            "createdBy": {
+              "type": ["string","null"],
+              "description": "创建人"
+            },
+            "createdTime": {
+              "type": ["string","null"],
+              "description": "创建时间"
+            },
+            "deleted": {
+              "type": ["boolean","null"],
+              "description": "逻辑删除标识"
+            },
+            "icon": {
+              "type": ["string","null"],
+              "description": "列表图标"
+            },
+            "id": {
+              "type": ["string","null"],
+              "description": "唯一标识"
+            },
+            "modifiedBy": {
+              "type": ["string","null"],
+              "description": "修改人"
+            },
+            "modifiedTime": {
+              "type": ["string","null"],
+              "description": "修改时间"
+            },
+            "name": {
+              "type": "string",
+              "description": "列表名称"
+            },
+            "name_i18n": {
+              "type": ["string","null"],
+              "description": "列表国际化名称"
+            },
+            "publish": {
+              "type": ["boolean","null"],
+              "description": "是否发布"
+            },
+            "queryActions": {
+              "type": ["array","null"],
+              "description": "列表操作",
+              "items": {
+                "anyOf": [{
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "clientType",
+                    "queryId",
+                    "schemaCode"
+                  ],
+                  "properties": {
+                    "actionCode": {
+                      "type": "string",
+                      "description": "操作动作编码"
+                    },
+                    "clientType": {
+                      "type": "string",
+                      "description": "客户端类型"
+                    },
+                    "createdBy": {
+                      "type": ["string","null"],
+                      "description": "创建人"
+                    },
+                    "createdTime": {
+                      "type": ["string","null"],
+                      "description": "创建时间"
+                    },
+                    "customService": {
+                      "type": ["boolean","null"],
+                      "description": "是否自定义业务方法"
+                    },
+                    "deleted": {
+                      "type": ["boolean","null"],
+                      "description": "逻辑删除标识"
+                    },
+                    "icon": {
+                      "type": ["string","null"],
+                      "description": "列表图标"
+                    },
+                    "id": {
+                      "type": ["string","null"],
+                      "description": "唯一标识"
+                    },
+                    "modifiedBy": {
+                      "type": ["string","null"],
+                      "description": "修改人"
+                    },
+                    "modifiedTime": {
+                      "type": ["string","null"],
+                      "description": "修改时间"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "操作动作名称"
+                    },
+                    "name_i18n": {
+                      "type": ["string","null"],
+                      "description": "操作动作国际化名称"
+                    },
+                    "queryActionRelativeType": {
+                      "type": ["string","null"],
+                      "description": "关联方式 关联流程 关联表单"
+                    },
+                    "queryActionType": {
+                      "type": ["string","null"],
+                      "description": "按钮类型"
+                    },
+                    "queryId": {
+                      "type": "string",
+                      "description": "按钮类型"
+                    },
+                    "relativeCode": {
+                      "type": ["string","null"],
+                      "description": "关联流程或表单的编码"
+                    },
+                    "remarks": {
+                      "type": ["string","null"],
+                      "description": "标记"
+                    },
+                    "schemaCode": {
+                      "type": "string",
+                      "description": "模型编码"
+                    },
+                    "serviceCode": {
+                      "type": ["string","null"],
+                      "description": "业务方法编码"
+                    },
+                    "serviceMethod": {
+                      "type": ["string","null"],
+                      "description": "自定义业务方法"
+                    },
+                    "sortKey": {
+                      "type": ["integer","null"],
+                      "description": "排序号"
+                    },
+                    "systemAction": {
+                      "type": ["boolean","null"],
+                      "description": "是否是系统自带的按钮"
+                    }
+                  }
+                }]
+              }
+            },
+            "queryColumns": {
+              "type": ["array","null"],
+              "description": "展示属性",
+              "items": {
+                "anyOf": [{
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "queryId",
+                    "clientType",
+                    "schemaCode"
+                  ],
+                  "properties": {
+                    "childColumns": {
+                      "type": ["array","null"],
+                      "description": "子表展示数据项"
+                    },
+                    "clientType": {
+                      "type": "string",
+                      "description": "客户端类型"
+                    },
+                    "createdBy": {
+                      "type": ["string","null"],
+                      "description": "创建人"
+                    },
+                    "createdTime": {
+                      "type": ["string","null"],
+                      "description": "创建时间"
+                    },
+                    "deleted": {
+                      "type": ["boolean","null"],
+                      "description": "逻辑删除标识"
+                    },
+                    "displayFormat": {
+                      "type": ["integer","null"],
+                      "description": "显示格式"
+                    },
+                    "id": {
+                      "type": ["string","null"],
+                      "description": "唯一标识"
+                    },
+                    "isDefaultProperty": {
+                      "type": ["boolean","null"],
+                      "description": "是否系统数据项"
+                    },
+                    "modifiedBy": {
+                      "type": ["string","null"],
+                      "description": "修改人"
+                    },
+                    "modifiedTime": {
+                      "type": ["string","null"],
+                      "description": "修改时间"
+                    },
+                    "name": {
+                      "type": ["string","null"],
+                      "description": "字段名称"
+                    },
+                    "name_i18n": {
+                      "type": ["string","null"],
+                      "description": "字段双语名称"
+                    },
+                    "propertyCode": {
+                      "type": "string",
+                      "description": "字段编码"
+                    },
+                    "propertyType": {
+                      "type": ["string","null"],
+                      "description": "数据项目类型"
+                    },
+                    "queryId": {
+                      "type": "string",
+                      "description": "列表ID"
+                    },
+                    "relativeSchemaCode": {
+                      "type": ["string","null"],
+                      "description": "关联的模型编码"
+                    },
+                    "remarks": {
+                      "type": ["string","null"],
+                      "description": "标记"
+                    },
+                    "schemaCode": {
+                      "type": "string",
+                      "description": "模型编码"
+                    },
+                    "sortKey": {
+                      "type": ["integer","null"],
+                      "description": "排序号"
+                    },
+                    "sumType": {
+                      "type": ["string","null"],
+                      "description": " 数值类型有效 求和 平均值 最大值 计数"
+                    },
+                    "unit": {
+                      "type": ["integer","null"],
+                      "description": "单位0:px,1:%"
+                    },
+                    "width": {
+                      "type": ["string","null"],
+                      "description": "宽度px,%"
+                    }
+                  }
+                }]
+              }
+            },
+            "remarks": {
+              "type": ["string","null"],
+              "description": "标记"
+            },
+            "schemaCode": {
+              "type": "string",
+              "description": "模型编码"
+            },
+            "showOnMobile": {
+              "type": ["boolean","null"],
+              "description": "移动端可见"
+            },
+            "showOnPc": {
+              "type": ["boolean","null"],
+              "description": "PC可见"
+            },
+            "sortKey": {
+              "type": ["integer","null"],
+              "description": "列表排序号"
+            }
+          }
+        }]
+      }
+    }
+  }
+}

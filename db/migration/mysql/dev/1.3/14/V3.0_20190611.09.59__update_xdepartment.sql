@@ -1,0 +1,1 @@
+UPDATE `h_org_department` SET `parentId`='06ef8c9a3f3b6669a34036a3001e63401' WHERE `id`='06ef8c9a3f3b6669a34036a3001e6340';

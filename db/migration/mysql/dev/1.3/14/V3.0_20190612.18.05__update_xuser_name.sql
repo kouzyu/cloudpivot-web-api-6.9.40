@@ -1,0 +1,1 @@
+UPDATE `h_org_user` SET `name`='外部用户' WHERE `id`='2ccf3b346706a6d3016706dc51c0022b';

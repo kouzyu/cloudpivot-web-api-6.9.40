@@ -1,0 +1,1 @@
+ALTER TABLE `h_perm_biz_function` ADD COLUMN `editOwnerAble` BIT(1) DEFAULT NULL COMMENT '更新拥有者';

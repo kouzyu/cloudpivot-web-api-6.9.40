@@ -1,0 +1,1 @@
+ALTER TABLE `h_workflow_header` ADD COLUMN `shortCode` varchar(50) DEFAULT NULL COMMENT '外链短码';

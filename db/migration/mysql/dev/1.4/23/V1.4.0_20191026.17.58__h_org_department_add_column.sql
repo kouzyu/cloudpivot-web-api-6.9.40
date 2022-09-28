@@ -1,0 +1,1 @@
+ALTER TABLE `h_org_department` ADD COLUMN `dingDeptManagerId` varchar(255) DEFAULT NULL COMMENT '钉钉部门主管id集合';

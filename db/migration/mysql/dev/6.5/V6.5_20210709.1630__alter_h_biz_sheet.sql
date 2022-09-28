@@ -1,0 +1,1 @@
+alter table h_biz_sheet add draftSchemaOptionsJson longtext;

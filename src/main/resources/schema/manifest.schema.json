@@ -1,0 +1,29 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"title": "云枢应用包",
+	"description": "云枢应用包，包含应用基础信息和应用权限信息",
+	"required": [
+		"id",
+		"code",
+		"name"
+	],
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "应用唯一标识"
+		},
+		"code": {
+			"type": "string",
+			"description": "应用编码"
+		},
+		"name": {
+			"type": "string",
+			"description": "应用名称"
+		},
+		"name_i18n": {
+			"type": "string",
+			"description": "应用名称，国际化"
+		}
+	}
+}

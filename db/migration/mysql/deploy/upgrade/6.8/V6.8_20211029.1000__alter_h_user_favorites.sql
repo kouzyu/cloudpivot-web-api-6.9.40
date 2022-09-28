@@ -1,0 +1,3 @@
+ALTER TABLE h_user_favorites
+MODIFY COLUMN bizObjectType varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+MODIFY COLUMN appCode varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;

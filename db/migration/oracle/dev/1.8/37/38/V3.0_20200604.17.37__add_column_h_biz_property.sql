@@ -1,0 +1,1 @@
+ALTER TABLE h_biz_property ADD (relativeQuoteCode clob DEFAULT null);

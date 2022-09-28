@@ -1,0 +1,2 @@
+ALTER TABLE `biz_workflow_instance` DROP COLUMN `isTrustStart`;
+ALTER TABLE `biz_workflow_instance` ADD COLUMN `trustType` varchar(20) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '委托类型，流程审批：APPROVAL；流程发起：START';

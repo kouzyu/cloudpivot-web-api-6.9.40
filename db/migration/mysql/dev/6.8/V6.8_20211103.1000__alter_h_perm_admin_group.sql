@@ -1,0 +1,1 @@
+ALTER TABLE h_perm_admin_group ADD externalLinkVisible bit(1) NOT NULL DEFAULT TRUE COMMENT '是否可查看外链';

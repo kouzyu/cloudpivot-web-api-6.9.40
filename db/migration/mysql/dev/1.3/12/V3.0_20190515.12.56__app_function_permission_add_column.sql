@@ -1,0 +1,1 @@
+ALTER TABLE `h_perm_biz_function` ADD COLUMN `nodeType` VARCHAR(40) DEFAULT NULL COMMENT '节点类型';

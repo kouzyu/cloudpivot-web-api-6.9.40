@@ -1,0 +1,1 @@
+ALTER TABLE `h_org_user` MODIFY `dingUserJson` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL ;

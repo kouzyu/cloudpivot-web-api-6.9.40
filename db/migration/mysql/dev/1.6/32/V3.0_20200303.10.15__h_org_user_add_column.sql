@@ -1,0 +1,1 @@
+ALTER TABLE `h_org_user` ADD COLUMN `dingUserJson` longtext COMMENT '钉钉同步过来的json数据记录';

@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_perm_property` ADD COLUMN `schemaCode` VARCHAR(40) DEFAULT NULL COMMENT '模型编码';

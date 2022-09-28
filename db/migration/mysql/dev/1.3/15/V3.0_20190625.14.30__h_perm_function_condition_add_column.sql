@@ -1,0 +1,1 @@
+ALTER TABLE `h_perm_function_condition` ADD `functionId` varchar(40) DEFAULT NULL;

@@ -1,0 +1,1 @@
+ALTER TABLE h_biz_remind MODIFY  `msgTemplate` longtext DEFAULT NULL

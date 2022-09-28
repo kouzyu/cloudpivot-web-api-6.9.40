@@ -1,0 +1,1 @@
+ALTER TABLE h_app_package ADD (appNameSpace varchar2(40) DEFAULT NULL);

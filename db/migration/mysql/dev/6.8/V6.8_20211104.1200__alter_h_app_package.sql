@@ -1,0 +1,1 @@
+ALTER TABLE h_app_package ADD fromAppMarket bit(1) COMMENT '是否来自应用市场';

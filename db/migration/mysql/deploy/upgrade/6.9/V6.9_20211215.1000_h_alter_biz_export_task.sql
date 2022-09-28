@@ -1,0 +1,1 @@
+ALTER TABLE h_biz_export_task ADD COLUMN fileSize int(11) NULL COMMENT '文件大小';

@@ -1,0 +1,1 @@
+ALTER TABLE `h_im_work_record_history` ADD `status` varchar(40) DEFAULT NULL;

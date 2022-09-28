@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_query_condition` ADD COLUMN `dateType` varchar(40) DEFAULT null COMMENT '日期快捷方式';

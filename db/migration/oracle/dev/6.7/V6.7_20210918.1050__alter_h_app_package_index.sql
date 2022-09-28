@@ -1,0 +1,1 @@
+create index idx_type_ac on h_app_function (type, appCode);

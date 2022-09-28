@@ -1,0 +1,1 @@
+ALTER TABLE h_perm_group ADD (authorType varchar2(40) DEFAULT null);

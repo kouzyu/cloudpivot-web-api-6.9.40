@@ -1,0 +1,1 @@
+ALTER TABLE `biz_workflow_instance` ADD COLUMN `sequenceNo` varchar(200) DEFAULT null COMMENT '单据号';

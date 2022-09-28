@@ -1,0 +1,889 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "definitions": {
+    "eventHandler": {
+      "description": "流程事件处理",
+      "type": "object",
+      "properties": {
+        "receiver": {
+          "type": "string",
+          "description": "消息接收人"
+        },
+        "popupType": {
+          "type": "string",
+          "description": "参与者弹窗模式：公式视图/表达式视图",
+          "enum": [
+            "FUNCTION",
+            "EXPRESSION"
+          ]
+        },
+        "content": {
+          "type": "string",
+          "description": "消息内容"
+        },
+        "dataDisposals": {
+          "type": "array",
+          "description": "设置数据",
+          "items": {
+            "type": "object",
+            "properties": {
+              "disposalType": {
+                "type": "string",
+                "description": "操作方式",
+                "enum": [
+                  "SET"
+                ]
+              },
+              "property": {
+                "type": "string",
+                "description": "数据项"
+              },
+              "value": {
+                "type": "string",
+                "description": "值"
+              },
+              "valueType": {
+                "type": "string",
+                "description": "值类型：固定值/动态值",
+                "enum": [
+                  "CONST",
+                  "DYNAMIC"
+                ]
+              }
+            }
+          }
+        },
+        "bizActionType": {
+          "type": "string",
+          "description": "触发动作类型：业务方法/业务规则",
+          "enum": [
+            "BIZ_RULE",
+            "BIZ_METHOD"
+          ]
+        },
+        "bizActions": {
+          "type": "array",
+          "description": "执行的业务方法/业务规则",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cancelParllelActivity": {
+          "type": "boolean",
+          "description": "通过时取消并行活动"
+        },
+        "rejectCancelParllelActivity": {
+          "type": "boolean",
+          "description": "驳回时取消并行活动"
+        }
+      }
+    },
+    "activateCommonProperty": {
+      "description": "节点共有属性",
+      "type": "object",
+      "required": [
+        "activityCode",
+        "activityName",
+        "activityType",
+        "width",
+        "height",
+        "x",
+        "y"
+      ],
+      "properties": {
+        "activityCode": {
+          "type": "string",
+          "description": "节点编码"
+        },
+        "activityName": {
+          "type": "string",
+          "description": "节点名称"
+        },
+        "activityType": {
+          "type": "string",
+          "description": "节点类型",
+          "enum": [
+            "START",
+            "END",
+            "PARTICIPANT",
+            "SYSTEM_ACTIVITY",
+            "SUB_INSTANCE",
+            "CONNECTION",
+            "CIRCULATE"
+          ]
+        },
+        "name_i18n": {
+          "type": "string",
+          "description": "节点名称国际化"
+        },
+        "width": {
+          "type": "number",
+          "description": "节点展示宽度"
+        },
+        "height": {
+          "type": "number",
+          "description": "节点展示高度"
+        },
+        "x": {
+          "type": "number",
+          "description": "节点横坐标"
+        },
+        "y": {
+          "type": "number",
+          "description": "节点纵坐标"
+        },
+        "popupType": {
+          "type": "string",
+          "description": "参与者弹窗模式：公式视图/表达式视图",
+          "enum": [
+            "FUNCTION",
+            "EXPRESSION"
+          ]
+        }
+      }
+    },
+    "circulateActivateProperty": {
+      "description": "传阅节点属性",
+      "type": "object",
+      "required": [
+        "sheetCode",
+        "participant",
+        "participantType"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/activateCommonProperty"
+        },
+        {
+          "properties": {
+            "sheetCode": {
+              "type": "string",
+              "description": "任务表单"
+            },
+            "participant": {
+              "type": "string",
+              "description": "参与者"
+            },
+            "beforeActivate": {
+              "$ref": "#/definitions/eventHandler",
+              "description": "节点激活前"
+            },
+            "afterActivate": {
+              "$ref": "#/definitions/eventHandler",
+              "description": "节点激活后"
+            },
+            "endActivity": {
+              "$ref": "#/definitions/eventHandler",
+              "description": "节点完成后"
+            }
+          }
+        }
+      ]
+    },
+    "participantActivateProperty": {
+      "description": "用户活动节点属性",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/activateCommonProperty"
+        },
+        {
+          "properties": {
+            "sheetCode": {
+              "type": "string",
+              "description": "任务表单"
+            },
+            "todoDataItem": {
+              "type": "object",
+              "description": "消息通知",
+              "properties": {
+                "dataItemType": {
+                  "type": "number",
+                  "description": "消息通知类型：系统通知/自定义通知",
+                  "enum": [
+                    0,
+                    1
+                  ]
+                },
+                "summary": {
+                  "type": "array",
+                  "description": "消息内容",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string",
+                        "description": "消息组成字段"
+                      },
+                      "isDataItem": {
+                        "type": "number",
+                        "description": "是否是数据项: 0表示code是用户输入文本，1表示code是表单字段编码，2表示code是视图列表的id",
+                        "enum": [
+                          0,
+                          1,
+                          2
+                        ]
+                      }
+                    },
+                    "required": [
+                      "code",
+                      "isDataItem"
+                    ]
+                  }
+                },
+                "title": {
+                  "type": "array",
+                  "description": "消息标题",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string",
+                        "description": "消息组成字段"
+                      },
+                      "isDataItem": {
+                        "type": "number",
+                        "description": "是否是数据项: 0表示code是用户输入文本，1表示code是表单字段编码",
+                        "enum": [
+                          0,
+                          1
+                        ]
+                      }
+                    },
+                    "required": [
+                      "code",
+                      "isDataItem"
+                    ]
+                  }
+                }
+              }
+            },
+            "participant": {
+              "type": "string",
+              "description": "参与者：函数表达式"
+            },
+            "participantType": {
+              "type": "string",
+              "description": "参与者类型",
+              "enum": [
+                "FUNCTION",
+                "EXPRESSION"
+              ]
+            },
+            "participationModel": {
+              "type": "string",
+              "description": "参与方式：并行/串行",
+              "enum": [
+                "PARALLEL",
+                "SERIAL"
+              ]
+            },
+            "approveExit": {
+              "type": "string",
+              "description": "同意出口"
+            },
+            "disapproveExit": {
+              "type": "string",
+              "description": "否决出口"
+            },
+            "targetActivityCode": {
+              "type": "string",
+              "description": "否决出口指定驳回节点"
+            },
+            "noParticipant": {
+              "type": "string",
+              "title": "无参与者",
+              "description": "转交管理员指的是找不到人时找对这条数据有管理权限的数据管理员，如果没有找到数据管理员就找系统管理员",
+              "enum": [
+                "TO_ADMIN",
+                "APPROVE"
+              ]
+            },
+            "originator": {
+              "type": "string",
+              "description": "是发起人",
+              "enum": [
+                "DEFAULT",
+                "APPROVE"
+              ]
+            },
+            "perviousParticipate": {
+              "type": "string",
+              "title": "前一活动处理",
+              "description": "与上一活动处理人相同，如A的下一节点是B,当B的参与者与A相同，自动通过",
+              "enum": [
+                "DEFAULT",
+                "APPROVE"
+              ]
+            },
+            "participated": {
+              "type": "string",
+              "title": "处理过流程",
+              "description": "在之前活动参与过流程,注当某个用户驳回之后，下一次任务再到达时不算参与过流程，例如A提交给B，B提交给C，C驳回给A，当A提交，再次到C时，不会自动跳过C",
+              "enum": [
+                "DEFAULT",
+                "APPROVE"
+              ]
+            },
+            "propertyPermissions": {
+              "type": "array",
+              "description": "数据项权限",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "editable": {
+                    "type": "boolean",
+                    "description": "是否可写"
+                  },
+                  "propertyCode": {
+                    "type": "string",
+                    "description": "数据项编码"
+                  },
+                  "propertyEmpty": {
+                    "type": "boolean",
+                    "description": "是否不允许为空，true则不允许为空"
+                  },
+                  "propertyName": {
+                    "type": "string",
+                    "description": "数据项名称"
+                  },
+                  "required": {
+                    "type": "boolean",
+                    "description": "是否必填"
+                  },
+                  "visible": {
+                    "type": "boolean",
+                    "description": "是否可见"
+                  }
+                },
+                "required": [
+                  "editable",
+                  "propertyCode",
+                  "propertyEmpty",
+                  "propertyName",
+                  "required",
+                  "visible"
+                ]
+              }
+            },
+            "permittedAction": {
+              "type": "object",
+              "description": "操作权限",
+              "properties": {
+                "adjustParticipant": {
+                  "type": "boolean",
+                  "description": "加签"
+                },
+                "assist": {
+                  "type": "boolean",
+                  "description": "协办"
+                },
+                "batchOperate": {
+                  "type": "boolean",
+                  "description": "批量处理"
+                },
+                "circulate": {
+                  "type": "boolean",
+                  "description": "传阅"
+                },
+                "finishInstance": {
+                  "type": "boolean",
+                  "description": "结束流程"
+                },
+                "forward": {
+                  "type": "boolean",
+                  "description": "转办"
+                },
+                "reject": {
+                  "type": "boolean",
+                  "description": "驳回到上一步"
+                },
+                "rejectToFixded": {
+                  "type": "boolean",
+                  "description": "驳回到指定节点"
+                },
+                "rejectToStart": {
+                  "type": "boolean",
+                  "description": "驳回到开始节点"
+                },
+                "retrieve": {
+                  "type": "boolean",
+                  "description": "撤回"
+                }
+              }
+            },
+            "allowedTime": {
+              "type": "string",
+              "description": "限时时间"
+            },
+            "timeoutWarning1": {
+              "type": "string",
+              "description": "超时预警1"
+            },
+            "timeoutWarning2": {
+              "type": "string",
+              "description": "超时预警2"
+            },
+            "timeoutStrategy": {
+              "type": "string",
+              "description": "超时后策略",
+              "enum": [
+                "NOTIFY_HANDLER",
+                "APPROVE",
+                "CIRCULATE_MANAGER"
+              ]
+            },
+            "beforeActivate": {
+              "$ref": "#/definitions/eventHandler"
+            },
+            "afterActivate": {
+              "$ref": "#/definitions/eventHandler"
+            },
+            "endActivity": {
+              "$ref": "#/definitions/eventHandler"
+            },
+            "cancelActivity": {
+              "$ref": "#/definitions/eventHandler"
+            },
+            "jobSubmitted": {
+              "$ref": "#/definitions/eventHandler"
+            },
+            "jobRejected": {
+              "$ref": "#/definitions/eventHandler"
+            }
+          }
+        }
+      ]
+    },
+    "subinstanceActivateProperty": {
+      "type": "object",
+      "required": [
+        "sync",
+        "finishStartActivity",
+        "workflowCode",
+        "triggerMappingObj",
+        "workflowDataMaps",
+        "participant"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/activateCommonProperty"
+        },
+        {
+          "properties": {
+            "todoDataItem": {
+              "type": "object",
+              "description": "消息通知",
+              "properties": {
+                "dataItemType": {
+                  "type": "number",
+                  "description": "消息通知类型：系统通知/自定义通知",
+                  "enum": [
+                    0,
+                    1
+                  ]
+                },
+                "summary": {
+                  "type": "array",
+                  "description": "消息内容",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string",
+                        "description": "消息组成字段"
+                      },
+                      "isDataItem": {
+                        "type": "number",
+                        "description": "是否是数据项: 0表示code是用户输入文本，1表示code是表单字段编码，2表示code是视图列表的id",
+                        "enum": [
+                          0,
+                          1,
+                          2
+                        ]
+                      }
+                    },
+                    "required": [
+                      "code",
+                      "isDataItem"
+                    ]
+                  }
+                },
+                "title": {
+                  "type": "array",
+                  "description": "消息标题",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string",
+                        "description": "消息组成字段"
+                      },
+                      "isDataItem": {
+                        "type": "number",
+                        "description": "是否是数据项: 0表示code是用户输入文本，1表示code是表单字段编码",
+                        "enum": [
+                          0,
+                          1
+                        ]
+                      }
+                    },
+                    "required": [
+                      "code",
+                      "isDataItem"
+                    ]
+                  }
+                }
+              }
+            },
+            "sync": {
+              "type": "boolean",
+              "title": "子流程启动方式",
+              "description": "同步指的是子流程结束前流程会停留在子流程节点，不会走到下个节点；异步指的是子流程被激活的同时父流程继续向下流转，子流程是否结束不影响父流程运行"
+            },
+            "workflowCode": {
+              "type": "string",
+              "description": "子流程模板编码"
+            },
+            "finishStartActivity": {
+              "type": "boolean",
+              "title": "发起环节自动通过",
+              "default": false
+            },
+            "triggerMappingObj": {
+              "type": "object",
+              "title": "触发对象",
+              "dependencies": {
+                "code": [
+                  "mainTable"
+                ]
+              },
+              "oneOf": [
+                {
+                  "properties": {
+                    "mainTable": {
+                      "type": "number",
+                      "description": "触发主表，值为0",
+                      "default": 0
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "mainTable": {
+                      "type": "number",
+                      "description": "触发子表，值为1",
+                      "default": 1
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "触发的子表编码"
+                    }
+                  }
+                }
+              ]
+            },
+            "workflowDataMaps": {
+              "type": "array",
+              "title": "数据映射",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "parentDataName": {
+                    "type": "string",
+                    "description": "父流程的数据项"
+                  },
+                  "childDataName": {
+                    "type": "string",
+                    "description": "子流程的数据项"
+                  },
+                  "inOutType": {
+                    "type": "string",
+                    "description": "映射方式"
+                  }
+                }
+              }
+            },
+            "participant": {
+              "type": "string",
+              "description": "参与者：函数表达式"
+            },
+            "beforeActivate": {
+              "$ref": "#/definitions/eventHandler"
+            },
+            "afterActivate": {
+              "$ref": "#/definitions/eventHandler"
+            },
+            "endActivity": {
+              "$ref": "#/definitions/eventHandler"
+            }
+          }
+        }
+      ]
+    },
+    "systemActivateProperty": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/activateCommonProperty"
+        },
+        {
+          "properties": {
+            "bizActionType": {
+              "type": "string",
+              "description": "触发动作类型：业务方法/业务规则",
+              "enum": [
+                "BIZ_RULE",
+                "BIZ_METHOD"
+              ]
+            },
+            "bizActions": {
+              "type": "array",
+              "description": "执行的业务方法/业务规则",
+              "items": {
+                "type": "string"
+              }
+            },
+            "finishCondition": {
+              "type": ["string","null"],
+              "description": "结束条件：条件表达式"
+            },
+            "beforeActivate": {
+              "$ref": "#/definitions/eventHandler"
+            },
+            "afterActivate": {
+              "$ref": "#/definitions/eventHandler"
+            },
+            "endActivity": {
+              "$ref": "#/definitions/eventHandler"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "title": "流程设计",
+  "description": "云枢-流程设计-元数据-格式规范",
+  "type": "object",
+  "required": [
+    "appCode",
+    "processTemplateMetadas"
+  ],
+  "properties": {
+    "appCode": {
+      "type": "string",
+      "description": "应用编码"
+    },
+    "processTemplateMetadas": {
+      "type": "array",
+      "description": "流程模板",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "required": [
+              "headerInfo",
+              "rules",
+              "activities"
+            ],
+            "properties": {
+              "headerInfo": {
+                "type": "object",
+                "description": "[新增]流程属性归集到头部信息属性字段来",
+                "properties": {
+                  "schemaCode": {
+                    "type": "string",
+                    "description": "流程所属业务模型的编码"
+                  },
+                  "appGroupName": {
+                    "type": ["string","null"],
+                    "description": "流程所属分组名"
+                  },
+                  "i18nAppGroupName": {
+                    "type": ["string","null"],
+                    "description": "流程所属分组名国际化"
+                  },
+                  "remarks": {
+                    "type": ["string","null"],
+                    "description": "流程发布说明"
+                  },
+                  "icon": {
+                    "type": ["string","null"],
+                    "description": "流程的图标"
+                  },
+                  "sortKey": {
+                    "type": "number",
+                    "description": "流程排序"
+                  },
+                  "published": {
+                    "type": "boolean",
+                    "description": "流程发布状态"
+                  },
+                  "workflowVersion": {
+                    "type": "number",
+                    "description": "流程版本号"
+                  },
+                  "externalLinkEnable": {
+                    "type": "boolean",
+                    "description": "流程外链开启状态"
+                  },
+                  "shortCode": {
+                    "type": ["string","null"],
+                    "description": "流程外链短码"
+                  },
+                  "workflowName": {
+                    "type": "string",
+                    "description": "流程名称"
+                  },
+                  "name_i18n": {
+                    "type": ["string","null"],
+                    "description": "流程名称国际化"
+                  },
+                  "workflowCode": {
+                    "type": "string",
+                    "description": "流程编码"
+                  }
+                }
+              },
+              "rules": {
+                "type": "array",
+                "description": "节点路由合集",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "fixedPoint": {
+                      "type": "boolean",
+                      "description": "是否固定点：保留字段"
+                    },
+                    "text": {
+                      "type": ["string","null"],
+                      "description": "路由显示名"
+                    },
+                    "name_i18n": {
+                      "type": ["string","null"],
+                      "description": "路由显示名国际化"
+                    },
+                    "points": {
+                      "type": "array",
+                      "description": "路由绘线经过拐点合集",
+                      "items": {
+                        "type": "string",
+                        "description": "每个点的坐标，形如 'x, y' "
+                      }
+                    },
+                    "formula": {
+                      "type": ["string","null"],
+                      "description": "路由条件：函数表达式"
+                    },
+                    "popupType": {
+                      "type": ["string","null"],
+                      "description": "路由弹窗类型：表达式/公式视图",
+                      "enum": [
+                        "FUNCTION",
+                        "EXPRESSION"
+                      ]
+                    },
+                    "utilizeElse": {
+                      "type": "boolean",
+                      "description": "是否使用else",
+                      "default": false
+                    },
+                    "postActivityCode": {
+                      "type": "string",
+                      "description": "后置节点"
+                    },
+                    "preActivityCode": {
+                      "type": "string",
+                      "description": "前置节点"
+                    }
+                  },
+                  "required": [
+                    "points",
+                    "postActivityCode",
+                    "preActivityCode",
+                    "text",
+                    "utilizeElse"
+                  ]
+                }
+              },
+              "activities": {
+                "type": "array",
+                "description": "节点合集",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "activityType": {
+                          "type": "string",
+                          "description": "节点类型",
+                          "enum": [
+                            "START",
+                            "END",
+                            "PARTICIPANT",
+                            "SYSTEM_ACTIVITY",
+                            "SUB_INSTANCE",
+                            "CONNECTION",
+                            "CIRCULATE"
+                          ]
+                        }
+                      },
+                      "if": {
+                        "properties": {
+                          "activityType": {
+                            "const": "PARTICIPANT"
+                          }
+                        }
+                      },
+                      "then": {
+                        "$ref": "#/definitions/participantActivateProperty",
+                        "description": "用户活动节点"
+                      },
+                      "if": {
+                        "properties": {
+                          "activityType": {
+                            "const": "SYSTEM_ACTIVITY"
+                          }
+                        }
+                      },
+                      "then": {
+                        "$ref": "#/definitions/systemActivateProperty",
+                        "description": "系统节点"
+                      },
+                      "if": {
+                        "properties": {
+                          "activityType": {
+                            "const": "SUB_INSTANCE"
+                          }
+                        }
+                      },
+                      "then": {
+                        "$ref": "#/definitions/subinstanceActivateProperty",
+                        "description": "子流程节点"
+                      },
+                      "if": {
+                        "properties": {
+                          "activityType": {
+                            "const": "CIRCULATE"
+                          }
+                        }
+                      },
+                      "then": {
+                        "$ref": "#/definitions/circulateActivateProperty",
+                        "description": "传阅节点"
+                      },
+                      "else": {
+                        "$ref": "#/definitions/activateCommonProperty",
+                        "description": "开始/结束/连接点 节点属性"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

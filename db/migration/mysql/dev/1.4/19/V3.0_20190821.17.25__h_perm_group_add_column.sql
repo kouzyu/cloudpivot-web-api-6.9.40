@@ -1,0 +1,1 @@
+ALTER TABLE `h_perm_group` ADD COLUMN `authorType` varchar(40) DEFAULT NULL COMMENT ' 授权类型';

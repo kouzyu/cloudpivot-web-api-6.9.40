@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_property` ADD COLUMN `relativePropertyCode` varchar(40) COLLATE utf8_bin DEFAULT NULL COMMENT '关联表单显示字段';

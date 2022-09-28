@@ -1,0 +1,3 @@
+INSERT INTO `h_app_group`(`id`, `createdTime`, `creater`, `deleted`, `modifiedTime`, `modifier`, `remarks`, `code`, `disabled`, `name`, `sortKey`, `name_i18n`) VALUES ('2c928fe6785dbfbb01785dc6277a0001', '2021-04-26 17:50:31', '2c9280a26706a73a016706a93ccf002b', b'0', '2021-04-26 17:50:31', NULL, NULL, 'all', NULL, '全部', 0, NULL);
+
+update h_app_package set groupId='2c928fe6785dbfbb01785dc6277a0000' where groupId is null or groupId='';

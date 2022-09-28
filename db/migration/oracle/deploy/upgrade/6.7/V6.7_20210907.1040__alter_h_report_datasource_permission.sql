@@ -1,0 +1,1 @@
+ALTER TABLE h_report_datasource_permission ADD parentObjectId varchar2(64) null;

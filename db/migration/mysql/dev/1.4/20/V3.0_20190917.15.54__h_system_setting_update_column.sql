@@ -1,0 +1,1 @@
+ALTER TABLE `h_system_setting` MODIFY `paramValue` varchar(700) DEFAULT NULL;

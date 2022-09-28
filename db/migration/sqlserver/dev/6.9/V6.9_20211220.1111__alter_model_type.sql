@@ -1,0 +1,3 @@
+
+ALTER TABLE H_BIZ_SCHEMA add MODELTYPE nvarchar(40);
+GO

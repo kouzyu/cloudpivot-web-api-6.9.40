@@ -1,0 +1,1 @@
+DROP index UK_9tviae6s7glway1kpyiybg4yp on `h_system_pair`;

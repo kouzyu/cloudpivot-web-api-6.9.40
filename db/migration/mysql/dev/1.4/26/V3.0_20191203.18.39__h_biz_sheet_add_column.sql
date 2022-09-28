@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_sheet` change `layout` `layoutType` varchar(20);

@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_sheet` ADD COLUMN `formComment` bit(1) DEFAULT 0 COMMENT '是否开启表单评论';

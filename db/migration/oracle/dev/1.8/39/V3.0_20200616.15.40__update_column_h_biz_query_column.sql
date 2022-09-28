@@ -1,0 +1,1 @@
+alter table h_biz_query_column modify name varchar2(600)

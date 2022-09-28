@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_sheet` MODIFY COLUMN `tempAuthSchemaCodes` varchar(3500) DEFAULT NULL COMMENT '临时授权的SchemaCode 以,分割';

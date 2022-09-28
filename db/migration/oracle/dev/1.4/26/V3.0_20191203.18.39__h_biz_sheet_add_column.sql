@@ -1,0 +1,1 @@
+ALTER TABLE h_biz_sheet rename column layout to layoutType;

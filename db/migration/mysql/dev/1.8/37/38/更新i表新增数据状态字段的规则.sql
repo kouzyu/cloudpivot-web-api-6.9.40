@@ -1,0 +1,34 @@
+--/*无i表可不运行此sql存储过程*/
+--/***************************************更新i表新增dataType字段***************************************************/
+--DELIMITER
+--DROP PROCEDURE IF EXISTS updateITableDataType;
+--
+--CREATE PROCEDURE updateITableDataType()
+--BEGIN
+--  DECLARE vTableName VARCHAR(50) DEFAULT '';
+--  DECLARE done INT DEFAULT 0;
+--  DECLARE vDataTypeCount INT DEFAULT 0;
+--	DECLARE vOwnerCount INT DEFAULT 0;
+--
+--  DECLARE taskCursor CURSOR FOR SELECT table_name FROM information_schema.tables WHERE table_name like 'i_%' ;
+--  DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+--  OPEN taskCursor;
+--
+--  REPEAT
+--    FETCH taskCursor INTO vTableName;
+--    IF NOT done THEN
+--      SET vOwnerCount = (SELECT count(*) FROM information_schema.columns WHERE table_name = vTableName AND column_name = 'owner' );
+--			SET vDataTypeCount = (SELECT count(*) FROM information_schema.columns WHERE table_name = vTableName AND column_name = 'dataType');
+--      IF vOwnerCount > 0 THEN
+--				IF vDataTypeCount > 0 THEN
+--					SET @alterSQL = concat('ALTER TABLE ', vTableName, ' drop COLUMN dataType');
+--					PREPARE stmtst FROM @alterSQL;
+--					EXECUTE stmtst;
+--				END IF;
+--      END IF;
+--    END IF;
+--  UNTIL done END REPEAT;
+--  CLOSE taskCursor;
+--END;
+--DELIMITER;
+--CALL updateITableDataType();

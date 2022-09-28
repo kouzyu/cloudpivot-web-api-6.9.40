@@ -1,0 +1,1 @@
+ALTER TABLE d_process_template CHANGE wfWorkItemId queryId VARCHAR(42) DEFAULT NULL COMMENT '列表ID'

@@ -1,0 +1,2 @@
+ALTER TABLE `h_log_biz_service` ADD COLUMN `schemaCode` VARCHAR (40) NULL DEFAULT NULL COMMENT '业务模型编码' COLLATE 'utf8_bin';
+ALTER TABLE `h_log_biz_service` ADD COLUMN `bizObjectId` VARCHAR (200) NULL DEFAULT NULL COMMENT '业务对象ID' COLLATE 'utf8_bin';

@@ -1,0 +1,406 @@
+server:
+  port: 8080
+  address: 0.0.0.0
+  compression:
+    enabled: true
+  # see: https://docs.spring.io/spring-boot/docs/2.1.18.RELEASE/reference/htmlsingle/#howto-use-behind-a-proxy-server
+  use-forward-headers: true
+  tomcat:
+    max-swallow-size: -1
+    remote-ip-header: x-forwarded-for
+    #protocol-header: x-forwarded-proto
+    #port-header: x-forwarded-port
+  servlet:
+    context-path: /api    #应用的上下文路径
+
+
+info:
+#  blog-url: https://www.cloudpivot.cn/
+#  author: Authine
+   version: @cloudpivot.version@
+   productName: 云枢
+
+
+spring:
+  application:
+    name: cloudpivot-web-api
+  #  boot:
+  #    admin:
+  #      client:
+  #        url: http://127.0.0.1:9999
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: local
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+  cache:
+    type: NONE
+  data:
+    redis:
+      repositories:
+        enabled: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    #数据库驱动:
+    #driver-class-name: oracle.jdbc.OracleDriver # Oracle
+    #driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver # SQL Server
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL
+    #数据库连接：
+    #url: jdbc:oracle:thin:@127.0.0.1:1521:orcl                                                                                     # Oracle
+    #url: jdbc:sqlserver://127.0.0.1:3433;database=cloudpivot                                                                       # SQL Server
+    url: jdbc:mysql://127.0.0.1:3306/cloudpivot?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false   # MySQL
+    username: root
+    password: test123456
+    hikari:
+      maximum-pool-size: 100                                    # 连接池最大连接数. 根据系统并发用户数设置合理值
+      minimum-idle: 10                                          # 连接池最小空闲连接数量
+      connection-timeout: 10000                                 # 数据库连接超时时间(单位毫秒)         10000 = 10 秒
+      idle-timeout: 600000                                      # 空闲连接存活最大时间(单位毫秒)       600000 = 10 分钟
+      max-lifetime: 1800000                                     # 连接池连接的最长生命周期(单位毫秒)   1800000 = 30 分钟
+      #If your driver supports JDBC4 we strongly recommend not setting this property. This is for "legacy" drivers that do not support the JDBC4 Connection.isValid() API.
+      #connection-test-query: select 1                           # 测试连接是否可用的查询语句 (MySQL, SQL Server)
+      #connection-test-query: select 1 from dual                # 测试连接是否可用的查询语句 (Oracle)
+      #validation-timeout: 5000                                  # 连接探活最大时间量(单位毫秒)           5000 = 5 秒
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 1024
+        prepStmtCacheSqlLimit: 4096
+        useServerPrepStmts: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    #database-platform: org.hibernate.dialect.Oracle12cDialect       # ORACLE
+    #database-platform: org.hibernate.dialect.SQLServerDialect       # SQL Server
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect     # MySQL
+    #database: MYSQL    # 支持 MYSQL  ORACLE
+    show-sql: false
+    properties:
+      hibernate.id.new_generator_mappings: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      hibernate.enable_lazy_load_no_trans: false
+      javax.persistence.sharedCache.mode: NONE
+  redis:
+    host: 127.0.0.1     #地址
+    database: 0         #集群模式下不指定数据库，注释此选项
+    password: foobared  #密码
+    port: 6379          #端口
+    prefix: ""
+    ## 集群模式
+    #cluster:
+    #  nodes:   # cluster节点地址
+    #    - "127.0.0.1:6379"
+    #    - "127.0.0.1:6389"
+    #    - "127.0.0.1:6399"
+    ## 哨兵模式
+    #sentinel:
+    #  nodes:   # 哨兵节点地址
+    #    - "127.0.0.1:26379"
+    #    - "127.0.0.1:26389"
+    #    - "127.0.0.1:26399"
+    #  master: mymaster    # 主服务器的名称
+
+  #spring session
+  session:
+    store-type: redis   #存储类型
+    redis:
+      namespace: ${spring.redis.prefix}
+  mvc:
+    locale: zh_CN
+    date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
+    check-template: false
+  security:
+    oauth:
+      sso_uri: http://127.0.0.1:8080
+  servlet:
+    multipart:
+      enabled: true                #默认支持文件上传
+      max-file-size: 200MB         #上传单个文件大小限制
+      max-request-size: 200MB      #多个同时上传总大小限制
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  # quartz相关属性配置
+  quartz:
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: clusteredScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStore
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: true
+            clusterCheckinInterval: 10000
+            useProperties: false
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    #数据库方式
+    job-store-type: jdbc
+    #初始化表结构
+    #jdbc:
+    #initialize-schema: never
+logging:
+  config: classpath:logback-spring.xml  #logback日志配置文件
+  level:
+    org.springframework.boot: warn
+    org.springframework.security.oauth2: warn
+    org.springframework.context.support.[PostProcessorRegistrationDelegate$BeanPostProcessorChecker]: warn
+    springfox.documentation: error
+    com.authine.cloudpivot: info   # 云枢产品日志输出级别
+# logback日志配置
+log:
+  path: logs           #日志文件输出路径，默认为应用所在目录的logs目录
+  maxFileSize: 50MB    #单个日志文件大小，默认50MB
+  maxHistory: 45       #默认保存45天的记录
+  totalLogSizeCap: 20GB #总日志文件上限大小，默认20GB，当日志大小超过这个值，删除旧的日志
+  errorLogSizeCap: 5GB  #错误日志文件上限大小，默认5GB，当日志大小超过这个值，删除旧的日志
+
+
+cloudpivot:
+  bizobject:
+    bizmethod-invoke-timeout-seconds: 10   #业务集成默认超时时间，单位：秒
+    db:
+      type: mysql                          #数据库类型名称，支持mysql, oracle, sqlserver
+      column:
+        sensitive: true                    #列名是否大小写敏感，默认为true,对oracle生效
+  encryption: false      #是否全局加解密
+  encrypt:
+    secret: bpm369!@#Authine #全局加解密密码,和前端一起固定,修改需前后端一起修改
+  swagger:
+    enabled: false       #开启Swagger API.  (默认不开启) , API 访问地址: http://hostname:port/context-path/doc.html 或者 http://hostname:port/context-path/swagger-ui.html
+    defaultRuleApiOn: true #为true时 swagger显示默认业务规则API
+  report:
+    #datasourceurl: http://127.0.0.1:6060  #报表integrate-webapi项目的访问地址，如果是同服务器部署并且报表使用默认的6060端口  可直接使用http://127.0.0.1:6060
+    supportoralce: true       #是否支持oracle    报表后台版本20200318-2.3.0.4 以后默认打开
+    thirdDatasourceUrl: http://127.0.0.1 #报表自定义sql服务器接口地址
+  system:
+    version: @cloudpivot.version@
+    update:
+      log:
+        url: https://www.yuque.com/skwme4/azptlz/tggisb  #产品更新日志地址
+  export:
+    orgCache:
+      expiration: 20 #导入导出组织架构缓存时间 单位：分
+    data:
+      pageable: 3000
+  import:
+    data:
+      size: 501
+  isv:
+    host: https://isv.cloudpivot.cn
+    secret_key: 919c2591-f47a-4300-9191-163da079e8e2
+  license:
+    licenseFile: cloudpivot.license        #许可证文件
+    verifyMode: offline                    # license授权验证方式，offline：本地授权文件方式；online：线上验证方式
+    instanceId:                            #当使用online验证方式时，需要配置客户实例ID,变量：${custInstanceId}
+    host: https://license.cloudpivot.cn
+    perm-manage:
+      enabled: false                       #授权管理开关, 默认关闭
+  login:
+    dingtalk: true                         #钉钉方式登录
+    accountpassword: false                 #账号密码登录
+    dingtalk&accountpassword: false        #钉钉扫码和账号密码方式登录
+  portal:
+    login:
+      local: true                          #portal端S2S登录是否请求本地地址, 默认为true
+  switch:
+    multi_language_toggle_switch: false    #多语言开关 默认关
+  convert:
+    html2pdf: flyingsaucer #HTML转PDF，两种方式phantomjs 和 flyingsaucer
+  api:
+    oauth:
+      enabled: true   # 是否开启权限校验
+      test:
+        userid:       # 模拟测试用户ID，不能用于生产环境
+    permission:
+      enable: true   #表单提交或修改的接口权限校验开关
+    token:
+      blacklist: false #token黑名单开关，开启后退出登录的token将不能使用
+    csrf:
+      check: false                    # csrf 请求跨域检查
+      referer:
+        whitelist: http://127.0.0.1   # csrf 请求跨域允许白名单
+  webmvc:
+    corsmappings: false          #配置是否允许跨域，详细参考 云枢帮助中心-开发者手册-解决跨域安全问题
+    corsAllowedOrigins: '*'      #跨域请求白名单,多个地址以逗号分割
+  dingtalk:
+    is_syn_user_json: false                #是否保存钉钉所有的JSON属性
+    is_syn_edu: false                      #是否同步家校通讯录
+    client:
+      aes_key: e6e18d0a42dd027cade89c213c75f477e6e18d0a42d
+      aes_token: 2cc69a199b644f9ca0d21360f242d98d
+      #钉钉组织机构同步事件
+      callback_tag:
+        user_add_org,
+        user_modify_org,
+        user_leave_org,
+        org_admin_add,
+        org_admin_remove,
+        org_dept_create,
+        org_dept_modify,
+        org_dept_remove,
+        org_remove,
+        org_change,
+        label_user_change,
+        label_conf_add,
+        label_conf_del,
+        label_conf_modify
+      callback_url: /public/dingtalk/notify #增量同步回到地址
+      dingtalk_server_proxy:                 #多组织下的代理服务器，默认为空，多个组织情况下需要配置，如：http://127.0.0.1/,地址需要以“/”结尾（不是多组织不需要配置）
+  wechat:
+    client:
+      aes_key: IjsfohGaWd5nncXxUzOaF7PY8rYoufbf3zgOjd1B0IZ
+      aes_token: LI1uHiaQvGer
+    proxy:
+      default_cp_base_url:                  #如：http://172.18.14.201/wx_base_url微信基数接口数据代理
+      scan_qrconnect:                       #如：http://172.18.14.201/wx_scan  微信扫码登录代理
+  organization:
+    related: false    #关联组织机构
+  bizlog:
+    storagetype: db                          #业务日志存储类型， sls 阿里云SLS日志服务，db 内置数据库
+    endpoint:          #地域节点 如：oss-cn-shenzhen.aliyuncs.com
+    accessKeyId:       #用户AccessKey
+    accessKeySecret:   #Access Key Secret
+    project:                #SLS项目名称
+    logStore: webapi_log    #web-sso日志库
+    loginStore: biz_login_log                #登录日志库
+    integrationStore: biz_service_log        #业务服务日志库
+    exceptionStore: biz_exeception_log       #异常日志库
+    engineLogStore: engine_log               #引擎日志库
+  task:
+    enabled: true                            #是否开启定时任务，在集群部署环境下只开启一个节点的定时任务
+  workItem:
+    participant_number: 1000                 #待办 传阅 加签 等参与者数量限制
+  message:
+    profile:
+      active: simple                         #消息类型，simple：进程内消息. 默认simple
+  workflow:
+    runtime_mode: async                      #流程运行时模式，async:异步；synch:同步
+    notify_enable: true                      #流程消息通知是否开启，默认开启：true
+    simulative:
+      retain_days: 30                        #流程模拟数据保留天数
+  event_push:
+    enable: false                            #是否开启事件订阅推送
+    consumer_number: 4                       #正常consumer线程数
+  orgSync: # 组织增量同步
+    enable: true                            # 是否开启
+    retryCount: 3                           # 钉钉回调事件处理失败重试次数
+    consumeCron: 0/10 * * * * ?             # 消息同步定时器cron表达式
+    defaultPassword: 123456                 #默认创建用户的初始密码，必须大于6位数的长度
+  attachment:
+    oss:
+      enabled: false     #是否启用oss存储附件
+    sftp:
+      enabled: true      #是否启用sftp存储附件
+    download:
+      url: http://127.0.0.1:8080/api
+  sftp:
+    maxTotal: 30 #ftp最大连接数
+    maxWaitMillis: 10000 #获取连接最大等待时间 单位毫秒
+    numTestsPerEvictionRun: 2 #驱逐线程每次检查对象个数
+    minEvictableIdleTimeMillis: 120000 #空闲连接被驱逐前能够保留的时间 单位毫秒
+    timeBetweenEvictionRunsMillis: 60000 #每隔这个时间值空闲连接回收器线程回收空闲连接，单位毫秒
+  permission:
+    deptScope:
+      useNewLogic: false #角色管理范围-部门 是否使用新逻辑
+# 分布式缓存配置
+# 配置详情见: https://gitee.com/ld/J2Cache/tree/master/modules/spring-boot2-starter
+j2cache:
+  L1:
+    provider_class: caffeine
+  L2:
+    provider_class: net.oschina.j2cache.cache.support.redis.SpringRedisProvider
+    config_section: lettuce
+  serialization: kryo
+  broadcast: net.oschina.j2cache.cache.support.redis.SpringRedisPubSubPolicy
+  # 开启对spring cache的支持
+  open-spring-cache: false
+  # 设置spring cache是否缓存null值
+  allow-null-values: false
+  # 缓存清除模式: active:主动清除，二级缓存过期主动通知各节点清除，优点在于所有节点可以同时收到缓存清除
+  #             passive:被动清除，一级缓存过期进行通知各节点清除一二级缓存
+  #             blend:两种模式一起运作，对于各个节点缓存准确性以及及时性要求高的可以使用（推荐使用前面两种模式中一种）
+  cache-clean-mode: passive
+  # 启用二级缓存
+  l2-cache-open: true
+caffeine:
+  region:
+    #########################################
+    # Caffeine configuration
+    # [name] = size, xxxx[s|m|h|d]
+    #########################################
+    default: 1000, 12h # 默认内存缓存配置 单个region, 最大持有1000个缓存对象, 写后12小时过期(当cache没自定义设置， 则使用此默认配置)
+    #BizProperty.id = 10000, 12h
+    #BizProperty.bizkey = 10000, 12h
+    #BizProperty.list = 1000, 12h
+lettuce:
+  namespace: ${spring.redis.prefix}j2c.engine
+  # storage: hash | generic
+  storage: generic
+
+#组织独立数据源配置
+organization:
+  independent-data-source:
+    switch: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/6.7?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: 1234
+    hikari:
+      maximum-pool-size: 10                                     # 连接池最大连接数. 根据系统并发用户数设置合理值
+      minimum-idle: 5
+  j2cache:
+    L1:
+      provider_class: caffeine
+    L2:
+      provider_class: com.authine.cloudpivot.engine.service.impl.support.redis.SpringRedisOrganizationProvider
+      config_section: lettuce
+    serialization: kryo
+    broadcast: com.authine.cloudpivot.engine.service.impl.support.redis.SpringRedisOrganizationPubSubPolicy
+    # 开启对spring cache的支持
+    open-spring-cache: false
+    # 设置spring cache是否缓存null值
+    allow-null-values: false
+    # 缓存清除模式: active:主动清除，二级缓存过期主动通知各节点清除，优点在于所有节点可以同时收到缓存清除
+    #             passive:被动清除，一级缓存过期进行通知各节点清除一二级缓存
+    #             blend:两种模式一起运作，对于各个节点缓存准确性以及及时性要求高的可以使用（推荐使用前面两种模式中一种）
+    cache-clean-mode: passive
+    # 启用二级缓存
+    l2-cache-open: true # 集群部署请确保此配置为true
+  caffeine:
+    region:
+      #########################################
+      # Caffeine configuration
+      # [name] = size, xxxx[s|m|h|d]
+      #########################################
+      default: 100, 1h # 默认内存缓存配置 单个region, 最大持有1000个缓存对象, 写后12小时过期(当cache没自定义设置， 则使用此默认配置)
+      #BizProperty.id = 10000, 12h
+      #BizProperty.bizkey = 10000, 12h
+      #BizProperty.list = 1000, 12h
+  lettuce:
+    namespace: ${organization.redis.prefix}j2c.engine
+    # storage: hash | generic
+    storage: generic
+  redis:
+    host: 127.0.0.1  #地址
+    database: 1         #
+    password: foobared  #密码
+    port: 6379          #端口
+    prefix: ""

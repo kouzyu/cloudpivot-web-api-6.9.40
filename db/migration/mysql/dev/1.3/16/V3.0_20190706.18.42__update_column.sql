@@ -1,0 +1,1 @@
+ALTER TABLE `h_im_work_record_history` MODIFY `taskId` varchar(42) DEFAULT NULL;

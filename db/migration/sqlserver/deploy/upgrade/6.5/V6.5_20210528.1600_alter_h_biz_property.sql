@@ -1,0 +1,1 @@
+alter table h_biz_property add options ntext;

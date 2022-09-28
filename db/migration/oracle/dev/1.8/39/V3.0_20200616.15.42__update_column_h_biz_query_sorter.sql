@@ -1,0 +1,1 @@
+alter table h_biz_query_sorter modify name varchar2(600)

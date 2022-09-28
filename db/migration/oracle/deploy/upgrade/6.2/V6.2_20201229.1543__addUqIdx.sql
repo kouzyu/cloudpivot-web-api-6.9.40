@@ -1,0 +1,1 @@
+create unique index UQ_SCHEMACODE_CODE on h_biz_property (schemaCode, code);

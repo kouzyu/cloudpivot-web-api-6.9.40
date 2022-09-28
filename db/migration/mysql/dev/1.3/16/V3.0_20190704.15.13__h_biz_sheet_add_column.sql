@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_sheet` ADD COLUMN `shortCode` varchar(50) DEFAULT NULL COMMENT '表单外链短码';

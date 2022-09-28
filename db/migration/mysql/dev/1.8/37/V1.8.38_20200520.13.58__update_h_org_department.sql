@@ -1,0 +1,1 @@
+ALTER TABLE `h_org_department` MODIFY COLUMN `queryCode` VARCHAR(255);

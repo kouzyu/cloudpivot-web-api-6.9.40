@@ -1,0 +1,2 @@
+ALTER TABLE `h_biz_query_condition` ADD COLUMN `accurateSearch` bit(1) DEFAULT NULL COMMENT '精确查找';
+ALTER TABLE `h_biz_query_condition` ADD COLUMN `displayFormat` varchar(40) DEFAULT NULL COMMENT '显示格式';

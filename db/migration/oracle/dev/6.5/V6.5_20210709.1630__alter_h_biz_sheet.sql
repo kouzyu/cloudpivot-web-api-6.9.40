@@ -1,0 +1,1 @@
+ALTER TABLE H_BIZ_SHEET ADD draftSchemaOptionsJson CLOB;

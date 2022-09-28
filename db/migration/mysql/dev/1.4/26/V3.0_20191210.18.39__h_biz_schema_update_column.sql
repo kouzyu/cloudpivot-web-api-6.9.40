@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_schema` MODIFY `remarks` varchar(2000) DEFAULT NULL;

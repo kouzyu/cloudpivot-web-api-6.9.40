@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_schema` ADD COLUMN `businessRuleEnable` bit(1) DEFAULT 0;

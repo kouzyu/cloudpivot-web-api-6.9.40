@@ -1,0 +1,1 @@
+DROP index UK_h_system_pair_paramCode;

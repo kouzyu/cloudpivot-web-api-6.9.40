@@ -1,0 +1,1 @@
+ALTER TABLE `h_workflow_header` ADD COLUMN `externalLinkEnable` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否开启外链';

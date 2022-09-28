@@ -1,0 +1,1 @@
+create index idx_trigger_id on h_biz_rule_effect(triggerId);

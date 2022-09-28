@@ -1,0 +1,1 @@
+alter table h_report_datasource_permission add parentObjectId varchar(64) null after objectId;

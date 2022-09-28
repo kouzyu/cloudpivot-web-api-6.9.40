@@ -1,0 +1,2 @@
+INSERT IGNORE INTO `base_security_client` (`id`,  `deleted`, `accessTokenValiditySeconds`, `additionInformation`, `authorities`, `authorizedGrantTypes`, `autoApproveScopes`, `clientId`, `clientSecret`, `refreshTokenValiditySeconds`, `registeredRedirectUris`, `resourceIds`, `scopes`, `type`)
+VALUES ('52ed17238a5da59e71a8aa26447d0c05', b'0', '3600', 'API', 'openapi', 'client_credentials', 'read,write', 'xclient', '{noop}0a417ecce58c31b32364ce19ca8fcd15', '3600', '', 'api', 'read,write', 'APP');

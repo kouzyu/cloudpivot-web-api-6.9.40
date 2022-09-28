@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `h_biz_rule` (
+  `id` varchar(120) NOT NULL,
+  `creater` varchar(120) DEFAULT NULL,
+  `createdTime` datetime DEFAULT NULL,
+  `deleted` bit(1) DEFAULT NULL,
+  `modifier` varchar(120) DEFAULT NULL,
+  `modifiedTime` datetime DEFAULT NULL,
+  `remarks` varchar(200) DEFAULT NULL,
+  `conditionJoinType` varchar(40) DEFAULT NULL COMMENT '条件连接类型',
+  `enabled` bit(1) DEFAULT NULL COMMENT '是否启用',
+  `name` varchar(100) DEFAULT NULL COMMENT '数据规则名称',
+  `ruleActionJson` longtext COMMENT '执行动作',
+  `ruleScopeJson` longtext COMMENT '查找范围',
+  `sourceSchemaCode` varchar(40) DEFAULT NULL COMMENT '规则所属模型编码',
+  `targetSchemaCode` varchar(40) DEFAULT NULL COMMENT '目标模型编码',
+  `triggerActionType` varchar(40) DEFAULT NULL COMMENT '触发动作类型',
+  `triggerConditionType` varchar(40) DEFAULT NULL COMMENT '触发条件类型',
+  `triggerSchemaCode` varchar(40) DEFAULT NULL COMMENT '触发模型编码',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '数据规则';

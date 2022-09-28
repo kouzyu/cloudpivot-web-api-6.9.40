@@ -1,0 +1,1 @@
+ALTER TABLE `h_biz_sheet` ADD COLUMN `pdfAble` VARCHAR (40) DEFAULT NULL COMMENT '开启pdf';
